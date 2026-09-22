@@ -4,7 +4,7 @@ import json, os, sqlite3, time, hashlib, secrets
 
 PORT = int(os.environ.get("PORT", 8000))
 ROOT = os.path.dirname(os.path.abspath(__file__))
-CLIENT_DIR = os.path.join(ROOT, "..", "client")
+CLIENT_DIR = os.path.join(ROOT, "..", "docs")
 DB_PATH = os.path.join(ROOT, "db", "greedy.db")
 
 # ---------- DB ----------
