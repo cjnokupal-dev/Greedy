@@ -1,11 +1,19 @@
-# dependencies / builds
-
-# Secrets
+# Secrets & local data
 server/.env
 server/.admin_key
 server/db/greedy.db
+server/db/*.db
+server/db/*.sqlite
 client/js/core/autoLogin.js
 
-# OS
+# OS junk
 .DS_Store
 Thumbs.db
+*.log
+
+# Node (if you ever add it)
+node_modules/
+
+# Python
+__pycache__/
+*.pyc
