@@ -92,6 +92,10 @@ export function netDailyIncome(owned) {
  * Returns { success, spent, unitsBought }.
  */
 export function buy(state, businessId, n = 1) {
+  n = Math.floor(Number(n));
+  if (!Number.isFinite(n) || n <= 0) {
+    return { success: false, spent: 0, unitsBought: 0, reason: "invalid_quantity" };
+  }
   const owned = state.owned[businessId] || 0;
   const cost = bulkCost(businessId, owned, n);
 

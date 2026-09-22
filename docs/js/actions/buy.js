@@ -1,24 +1,15 @@
 // GREEDY — buy action
-// Wraps economy.buy, applies greed, relief, and logs.
-// Reads: economy.js, greed.js, businesses.js
-// Mutates: state.money, state.owned, state.greed, state.stats, state.log
-
 import { BALANCE } from "../data/balance.js";
 import { getBusinessById } from "../data/businesses.js";
 import * as Economy from "../systems/economy.js";
 import * as Greed from "../systems/greed.js";
 
-/**
- * Buy N units of a business.
- * Returns { success, spent, unitsBought, greedDelta, reason? }
- */
 export function buy(state, businessId, n = 1) {
   const biz = getBusinessById(businessId);
-  if (!biz) {
-    return { success: false, reason: "unknown_business" };
-  }
+  if (!biz) return { success: false, reason: "unknown_business" };
 
-  if (!Number.isInteger(n) || n <= 0) {
+  n = Math.floor(Number(n));
+  if (!Number.isFinite(n) || n <= 0) {
     return { success: false, reason: "invalid_quantity" };
   }
 
@@ -27,9 +18,7 @@ export function buy(state, businessId, n = 1) {
   }
 
   const result = Economy.buy(state, businessId, n);
-  if (!result.success) {
-    return result;
-  }
+  if (!result.success) return result;
 
   const greedGained = Greed.gainFromPurchase(state, result.unitsBought);
   const greedRelief = Greed.reliefFromSpend(state, result.spent);
@@ -41,7 +30,7 @@ export function buy(state, businessId, n = 1) {
   pushLog(state, {
     day: state.day,
     kind: "purchase",
-    text: `Bought ${result.unitsBought}× ${biz.name} for $${fmt(result.spent)}`
+    text: "Bought " + result.unitsBought + "x " + biz.name + " for $" + fmt(result.spent)
   });
 
   return {
@@ -53,29 +42,51 @@ export function buy(state, businessId, n = 1) {
   };
 }
 
-/**
- * Buy the maximum affordable units.
- */
 export function buyMax(state, businessId) {
+  const biz = getBusinessById(businessId);
+  if (!biz) return { success: false, reason: "unknown_business" };
+
   const owned = state.owned[businessId] || 0;
-  const n = Economy.maxAffordable(businessId, owned, state.money);
+  const available = state.money;
+
+  const growth = 1 + BALANCE.economy.costGrowthPerUnit;
+  const firstUnitCost = biz.baseCost * Math.pow(growth, owned);
+
+  let n;
+  if (firstUnitCost >= available) {
+    n = 0;
+  } else {
+    const ratio = (available * (growth - 1)) / firstUnitCost + 1;
+    n = Math.floor(Math.log(ratio) / Math.log(growth));
+    if (n < 1) n = 1;
+    if (n > 10000000) n = 10000000;
+  }
+
   if (n <= 0) return { success: false, reason: "cannot_afford" };
+
+  // verify exact cost — trim down if slightly over
+  let cost = Economy.bulkCost(businessId, owned, n);
+  while (cost > available && n > 0) {
+    n--;
+    cost = Economy.bulkCost(businessId, owned, n);
+  }
+  if (n <= 0) return { success: false, reason: "cannot_afford" };
+
   return buy(state, businessId, n);
 }
 
 function isUnlocked(state, biz) {
   const u = biz.unlockAt || {};
   if (u.money != null && state.money < u.money) return false;
-  if (u.day   != null && state.day   < u.day)   return false;
+  if (u.day != null && state.day < u.day) return false;
   return true;
 }
 
 function pushLog(state, entry) {
+  state.log = state.log || [];
   state.log.push({ ...entry, time: Date.now() });
   const max = BALANCE?.limits?.logEntries ?? 200;
-  if (state.log.length > max) {
-    state.log.splice(0, state.log.length - max);
-  }
+  if (state.log.length > max) state.log.splice(0, state.log.length - max);
 }
 
 function fmt(n) {
