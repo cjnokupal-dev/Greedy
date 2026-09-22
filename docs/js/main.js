@@ -129,7 +129,7 @@ document.querySelectorAll(".tab").forEach(tab => {
 });
 
 function handleBuy(id, n) {
-  const r = buy(state, id, n);
+  const r = (n === "max") ? buyMax(state, id) : buy(state, id, n);
   if (!r.success) toast("Can't buy: " + (r.reason || "unknown"));
   else { toast("Bought " + r.unitsBought + " for " + formatMoney(r.spent)); try { Sound.bigPurchase(); } catch (e) {} try { react("buy"); } catch (e) {} }
   markDirty();
