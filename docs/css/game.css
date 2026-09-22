@@ -318,3 +318,18 @@
 }
 .btn-buy-max:active { transform: scale(0.96); }
 .btn-buy-max:disabled { opacity: 0.3; box-shadow: none; }
+
+/* MAX button compact */
+.btn-buy-max {
+  font-size: 11px !important;
+  padding: 9px 10px !important;
+  letter-spacing: 0.5px !important;
+  white-space: nowrap;
+}
+
+/* owned count — support big numbers */
+.biz-owned {
+  font-size: 18px !important;
+  min-width: 55px;
+  text-align: right;
+}

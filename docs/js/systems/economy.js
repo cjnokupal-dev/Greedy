@@ -25,27 +25,31 @@ export function nextCost(businessId, ownedCount) {
  * Total cost to buy N units starting from current owned count.
  */
 export function bulkCost(businessId, ownedCount, n) {
-  let total = 0;
-  for (let i = 0; i < n; i++) {
-    total += nextCost(businessId, ownedCount + i);
-  }
-  return total;
+  const b = getBusinessById(businessId);
+  if (!b) return Infinity;
+  if (n <= 0) return 0;
+  const g = 1 + BALANCE.economy.costGrowthPerUnit;
+  // sum from i=0 to n-1 of base * g^(ownedCount + i)
+  // = base * g^ownedCount * (g^n - 1) / (g - 1)
+  const firstTerm = b.baseCost * Math.pow(g, ownedCount);
+  const sum = firstTerm * (Math.pow(g, n) - 1) / (g - 1);
+  if (!isFinite(sum)) return Infinity;
+  return Math.floor(sum);
 }
 
 /**
  * How many units can be afforded with a given money amount.
  */
 export function maxAffordable(businessId, ownedCount, money) {
-  let count = 0;
-  let spent = 0;
-  while (true) {
-    const c = nextCost(businessId, ownedCount + count);
-    if (spent + c > money) break;
-    spent += c;
-    count++;
-    if (count > 10000) break; // safety
-  }
-  return count;
+  const b = getBusinessById(businessId);
+  if (!b) return 0;
+  const g = 1 + BALANCE.economy.costGrowthPerUnit;
+  const firstUnit = b.baseCost * Math.pow(g, ownedCount);
+  if (firstUnit > money) return 0;
+  const ratio = (money * (g - 1)) / firstUnit + 1;
+  const n = Math.floor(Math.log(ratio) / Math.log(g));
+  if (!isFinite(n) || n < 0) return 0;
+  return Math.min(n, 10000000);
 }
 
 /**
