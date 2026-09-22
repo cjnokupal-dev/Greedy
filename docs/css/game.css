@@ -333,3 +333,21 @@
   min-width: 55px;
   text-align: right;
 }
+
+/* Hide DEV button on public builds — JS also removes it, this is belt+suspenders */
+</EOF
+
+# 3. Verify
+echo ""
+echo "=== VERIFY ==="
+grep -n "IS_LOCALHOST\|sections =" docs/js/ui/settings.js | head -8
+
+echo ""
+echo "=== CHECK 2: is 'dev' the label? ==="
+grep -n '"DEV"\|"dev"' docs/js/ui/settings.js | head -10
+
+echo ""
+echo "=== COMMIT ==="
+git add -A
+git commit -m "Hide DEV section in Setup on public deploys"
+git push

@@ -32,7 +32,7 @@ export function refreshSettings() {
   panel.appendChild(header);
 
   // section tabs
-  const sections = [["main","MAIN"],["cloud","CLOUD"],["data","DATA"],["dev","DEV"],["about","ABOUT"]];
+  const sections = [["main","MAIN"],["cloud","CLOUD"],["data","DATA"],["about","ABOUT"]];
   const tabs = document.createElement("div");
   tabs.style.cssText = "display:flex;gap:4px;margin-bottom:16px;";
   for (const [id, label] of sections) {
@@ -51,7 +51,7 @@ export function refreshSettings() {
   if (activeSection === "main") renderMain(content, s);
   else if (activeSection === "cloud") renderCloud(content, s);
   else if (activeSection === "data") renderData(content, s);
-  else if (activeSection === "dev") renderDev(content, s);
+  else if (activeSection === "dev" && IS_LOCALHOST) renderDev(content, s);
   else if (activeSection === "about") renderAbout(content, s);
 }
 
