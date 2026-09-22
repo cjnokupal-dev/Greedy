@@ -3,7 +3,7 @@ import { createNewState, snapshot } from "./core/state.js";
 import { loadGame, deleteSave } from "./core/save.js";
 import { installLifecycleHooks, markDirty, forceSave, maybeAutosave } from "./core/autosave.js";
 import { startLoop, stopLoop, isRunning, pendingEvents, pendingWarnings } from "./core/loop.js";
-import { buy } from "./actions/buy.js";
+import { buy, buyMax } from "./actions/buy.js";
 import { sell } from "./actions/sell.js";
 import { buyUpgrade } from "./systems/upgrades.js";
 import * as Rebirth from "./systems/rebirth.js";

@@ -306,3 +306,15 @@
   z-index: 100;
 }
 #clean-hint.show { opacity: 1; }
+
+/* MAX buy button */
+.btn-buy-max {
+  background: linear-gradient(135deg, var(--money), #00a860) !important;
+  color: #000 !important;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  margin-top: 4px;
+  box-shadow: 0 0 12px rgba(0, 255, 157, 0.3);
+}
+.btn-buy-max:active { transform: scale(0.96); }
+.btn-buy-max:disabled { opacity: 0.3; box-shadow: none; }

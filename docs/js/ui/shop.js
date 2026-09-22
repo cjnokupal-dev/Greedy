@@ -37,10 +37,14 @@ export function renderShop(state, onBuy) {
         <button class="btn-buy" ${canAfford ? "" : "disabled"}>
           BUY ${formatMoney(cost)}
         </button>
+        <button class="btn-buy-max" ${canAfford ? "" : "disabled"}>
+          MAX
+        </button>
       </div>
     `;
 
     card.querySelector(".btn-buy").addEventListener("click", () => onBuy(biz.id, 1));
+    card.querySelector(".btn-buy-max").addEventListener("click", () => onBuy(biz.id, "max"));
     panel.appendChild(card);
   }
 }
