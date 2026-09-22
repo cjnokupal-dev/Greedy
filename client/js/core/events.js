@@ -1,0 +1,1 @@
+// GREEDY — internal event bus

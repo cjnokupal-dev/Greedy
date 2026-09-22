@@ -1,0 +1,1 @@
+// GREEDY — text, names, descriptions

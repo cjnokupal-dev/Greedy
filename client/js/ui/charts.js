@@ -1,0 +1,1 @@
+// GREEDY — simple money graphs

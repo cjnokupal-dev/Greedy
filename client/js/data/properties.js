@@ -1,0 +1,1 @@
+// GREEDY — real estate / assets

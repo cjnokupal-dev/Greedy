@@ -1,0 +1,1 @@
+// GREEDY — popup for events

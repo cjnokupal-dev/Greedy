@@ -1,0 +1,47 @@
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+#modal { animation: fadeIn 0.2s ease-out; }
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.log-entry { animation: slideIn 0.2s ease-out; }
+
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 12px currentColor; }
+  50% { box-shadow: 0 0 24px currentColor; }
+}
+.glow { animation: glow 2s infinite; }
+
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+#app::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 40px;
+  background: linear-gradient(180deg, transparent, rgba(0, 212, 255, 0.04), transparent);
+  pointer-events: none;
+  z-index: 9999;
+  animation: scan 8s linear infinite;
+}
+
+/* ===== REDUCED MOTION MODE ===== */
+.reduced-motion #app::after { display: none !important; }
+.reduced-motion * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+.reduced-motion .meter-fill { box-shadow: none !important; }
+.reduced-motion .hud-stat .value { text-shadow: none !important; }

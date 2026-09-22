@@ -1,0 +1,1 @@
+// GREEDY — client-side constants

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0a0f" />
+  <title>GREEDY v1790037336</title>
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/ui.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/game.css" />
+</head>
+<body>
+  <div id="app">
+    <header id="hud">
+      <div class="hud-row">
+        <div class="hud-stat">
+          <span class="label">DAY</span>
+          <span class="value" id="hud-day">1</span>
+        </div>
+        <div class="hud-stat money">
+          <span class="label">CASH</span>
+          <span class="value" id="hud-money">$100.00</span>
+        </div>
+      </div>
+      <div class="hud-row">
+        <div class="meter" id="meter-greed">
+          <span class="meter-label">GREED</span>
+          <div class="meter-bar"><div class="meter-fill" id="greed-fill"></div></div>
+          <span class="meter-value" id="greed-value">0</span>
+        </div>
+      </div>
+      <div class="hud-row small">
+        <div class="hud-stat"><span class="label">REP</span><span class="value" id="hud-rep">50</span></div>
+        <div class="hud-stat"><span class="label">HEAT</span><span class="value" id="hud-heat">0</span></div>
+        <div class="hud-stat"><span class="label">HP</span><span class="value" id="hud-health">100</span></div>
+      </div>
+      <canvas id="wealth-chart" width="360" height="40" style="display:block;width:100%;height:40px;background:#05060a;border-bottom:1px solid var(--border);"></canvas>
+    </header>
+
+    <canvas id="scene" width="320" height="200"></canvas>
+
+    <main id="panels">
+      <section class="panel active" id="panel-shop"></section>
+      <section class="panel" id="panel-upgrades"></section>
+      <section class="panel" id="panel-employees"></section>
+      <section class="panel" id="panel-stocks"></section>
+      <section class="panel" id="panel-map"></section>
+      <section class="panel" id="panel-gambling"></section>
+      <section class="panel" id="panel-loans"></section>
+      <section class="panel" id="panel-contracts"></section>
+      <section class="panel" id="panel-research"></section>
+      <section class="panel" id="panel-rebirth"></section>
+      <section class="panel" id="panel-achievements"></section>
+      <section class="panel" id="panel-wardrobe"></section>
+      <section class="panel" id="panel-titles"></section>
+      <section class="panel" id="panel-owned"></section>
+      <section class="panel" id="panel-ultra"></section>
+      <section class="panel" id="panel-settings"></section>
+      <section class="panel" id="panel-heist"></section>
+      <section class="panel" id="panel-story"></section>
+      <section class="panel" id="panel-collect"></section>
+      <section class="panel" id="panel-vault"></section>
+      <section class="panel" id="panel-super"></section>
+      <section class="panel" id="panel-dev"></section>
+      <section class="panel" id="panel-log"></section>
+    </main>
+
+    <footer id="footer">
+      <button id="btn-advance">⏸ PAUSE</button>
+    </footer>
+
+    <nav id="tabs">
+      <button class="tab active" data-tab="shop"><span class="nav-icon">🛒</span>Shop</button>
+      <button class="tab" data-tab="upgrades"><span class="nav-icon">⚡</span>Upgrades</button>
+      <button class="tab" data-tab="employees"><span class="nav-icon">👥</span>Staff</button>
+      <button class="tab" data-tab="stocks"><span class="nav-icon">📈</span>Stocks</button>
+      <button class="tab" data-tab="map"><span class="nav-icon">🗺</span>Map</button>
+      <button class="tab" data-tab="gambling"><span class="nav-icon">🎰</span>Gamble</button>
+      <button class="tab" data-tab="loans"><span class="nav-icon">💳</span>Loans</button>
+      <button class="tab" data-tab="contracts"><span class="nav-icon">📋</span>Jobs</button>
+      <button class="tab" data-tab="research"><span class="nav-icon">🔬</span>Research</button>
+      <button class="tab" data-tab="rebirth"><span class="nav-icon">★</span>Rebirth</button>
+      <button class="tab" data-tab="achievements"><span class="nav-icon">🏆</span>Achieve</button>
+      <button class="tab" data-tab="wardrobe"><span class="nav-icon">👕</span>Wear</button>
+      <button class="tab" data-tab="titles"><span class="nav-icon">👑</span>Title</button>
+      <button class="tab" data-tab="ultra"><span class="nav-icon">🌟</span>Ultra</button>
+      <button class="tab" data-tab="settings"><span class="nav-icon">⚙</span>Setup</button>
+      <button class="tab" data-tab="heist"><span class="nav-icon">🎯</span>Heist</button>
+      <button class="tab" data-tab="story"><span class="nav-icon">📖</span>Story</button>
+      <button class="tab" data-tab="collect"><span class="nav-icon">💎</span>Gems</button>
+      <button class="tab" data-tab="vault"><span class="nav-icon">💠</span>Vault</button>
+      <button class="tab" data-tab="super"><span class="nav-icon">✦</span>Super</button>
+      <button class="tab" data-tab="dev"><span class="nav-icon">🛠</span>Dev</button>
+      <button class="tab" data-tab="log"><span class="nav-icon">📜</span>Log</button>
+    </nav>
+
+    <div id="modal-backdrop" class="hidden">
+      <div id="modal">
+        <h2 id="modal-title">Event</h2>
+        <p id="modal-desc"></p>
+        <div id="modal-deltas"></div>
+        <button id="modal-close">OK</button>
+      </div>
+    </div>
+
+    <div id="toast" class="hidden"></div>
+  </div>
+
+  <script>
+    if ("serviceWorker" in navigator) navigator.serviceWorker.register("./sw.js").catch(() => {});
+  </script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

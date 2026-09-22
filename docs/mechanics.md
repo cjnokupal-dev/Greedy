@@ -1,0 +1,1 @@
+# GREEDY — how systems interact

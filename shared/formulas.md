@@ -1,0 +1,1 @@
+# GREEDY — documented math formulas

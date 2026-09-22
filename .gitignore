@@ -1,0 +1,11 @@
+# dependencies / builds
+
+# Secrets
+server/.env
+server/.admin_key
+server/db/greedy.db
+client/js/core/autoLogin.js
+
+# OS
+.DS_Store
+Thumbs.db

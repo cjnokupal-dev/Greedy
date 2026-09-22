@@ -1,0 +1,38 @@
+:root {
+  /* Base */
+  --bg: #05060a;
+  --bg-panel: #0a0d16;
+  --bg-elevated: #10141f;
+  --bg-glow: #1a2030;
+
+  /* Borders & lines */
+  --border: #1a2030;
+  --border-bright: #2a3550;
+
+  /* Text */
+  --text: #e8ecf5;
+  --text-dim: #6a7590;
+  --text-mute: #3d4658;
+
+  /* Accents */
+  --accent: #00d4ff;
+  --accent-2: #7c3aed;
+  --accent-3: #ff0080;
+  --money: #00ff9d;
+  --danger: #ff3d5a;
+  --warn: #ffb84d;
+  --safe: #00d4ff;
+
+  /* Glow */
+  --glow-accent: 0 0 20px rgba(0, 212, 255, 0.4);
+  --glow-money: 0 0 16px rgba(0, 255, 157, 0.5);
+  --glow-danger: 0 0 20px rgba(255, 61, 90, 0.5);
+
+  /* Layout */
+  --font: 'SF Mono', 'Consolas', 'Menlo', monospace;
+  --font-display: 'SF Mono', 'Consolas', monospace;
+  --radius: 4px;
+  --radius-lg: 8px;
+  --gap: 8px;
+  --pad: 14px;
+}

@@ -1,0 +1,1 @@
+# GREEDY — global rankings

@@ -1,0 +1,39 @@
+{
+  "game": {
+    "name": "GREEDY",
+    "version": "0.1.0",
+    "saveFormatVersion": 1
+  },
+  "session": {
+    "startDay": 1,
+    "startMoney": 100,
+    "startGreed": 0,
+    "startReputation": 50,
+    "startHealth": 100,
+    "maxDays": null,
+    "bankruptcyThreshold": -5000
+  },
+  "time": {
+    "mode": "turn-based",
+    "secondsPerDay": 0,
+    "autoAdvance": false
+  },
+  "limits": {
+    "greedMax": 100,
+    "reputationMax": 100,
+    "healthMax": 100,
+    "heatMax": 100,
+    "logEntries": 200,
+    "saveSlots": 3
+  },
+  "persistence": {
+    "storageKey": "greedy_save_v1",
+    "autosaveEnabled": true,
+    "autosaveEveryNDays": 5
+  },
+  "debug": {
+    "enabled": true,
+    "showNumbers": true,
+    "fastMode": false
+  }
+}
