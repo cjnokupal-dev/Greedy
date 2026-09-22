@@ -112,6 +112,21 @@
   <script>
     if ("serviceWorker" in navigator) navigator.serviceWorker.register("./sw.js").catch(() => {});
   </script>
+  <script>
+    // Hide Dev tab on non-localhost — before main.js loads
+    (function() {
+      const h = location.hostname;
+      const isLocal = h === "localhost" || h === "127.0.0.1" || h === "0.0.0.0" || h.endsWith(".local");
+      if (!isLocal) {
+        document.addEventListener("DOMContentLoaded", function() {
+          const devTab = document.querySelector('[data-tab="dev"]');
+          if (devTab) devTab.style.display = "none";
+          const devPanel = document.getElementById("panel-dev");
+          if (devPanel) devPanel.innerHTML = "";
+        });
+      }
+    })();
+  </script>
   <script type="module" src="js/main.js"></script>
 </body>
 </html>
